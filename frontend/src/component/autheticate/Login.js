@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import nike from '../assets/nike.png';
 import style from '../style/Auth.module.css';
 
 const Login = () => {
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -14,24 +15,22 @@ const Login = () => {
 
     const loginUser = async (email, password) => {
         try {
-            const response = await fetch(`http://localhost:5000/api/auth/login`, {
+            const response = await fetch('http://localhost:5000/api/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    email,
-                    password,
-                }),
+                body: JSON.stringify({ email, password }),
             });
             const data = await response.json();
             if (response.ok) {
+                localStorage.setItem('token', data.token); // Save the token
+                localStorage.setItem('role', data.role); // Save the role
                 console.log('Login successful:', data);
+                navigate('/home'); // Redirect to the home page
             } else {
                 console.error('Login failed:', data.message);
             }
-
-            localStorage.setItem('token', data.token);
         } catch (err) {
             console.error('Error:', err.message);
         }

@@ -1,21 +1,32 @@
 const jwt = require('jsonwebtoken');
-const user = require('../models/user');
+const User = require('../models/user');
 
 const authMiddleware = async (req, res, next) => {
-    let token = req.headers.authorization;
-    if(token && token.startsWith("Bearer")){
-        try{
-            token = token.split(" ")[1];
-            const decode = jwt.verify(token, process.env.JWT_SECRET);
-            req.user = await user.findById(decode.id).select("-password");
-            next();
-        }
-        catch(err){
-            res.status(401).json({ message: "Not authorized, token failed" });
-        }
-    }else {
-        res.status(401).json({ message: "Not authorized, no token" });
-    }
-}
+  const token = req.headers.authorization?.split(' ')[1];
+  if (!token) {
+    return res.status(401).send({ message: 'Not authorized, no token' });
+  }
 
-module.exports = authMiddleware;
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id);
+
+    if (!user) {
+      return res.status(404).send({ message: 'User not found' });
+    }
+
+    req.user = user;
+    next();
+  } catch (err) {
+    res.status(401).send({ message: 'Not authorized, token failed' });
+  }
+};
+
+const adminMiddleware = (req, res, next) => {
+  if (req.user.role !== 'admin') {
+    return res.status(403).send({ message: 'Access denied, admin only' });
+  }
+  next();
+};
+
+module.exports = { authMiddleware, adminMiddleware };

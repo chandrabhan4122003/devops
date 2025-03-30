@@ -1,8 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import style from '../style/Admin.module.css';
 
 const Admin = () => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+      const role = localStorage.getItem('role');
+      if (role !== 'admin') {
+        navigate('/'); 
+      }
+    }, [navigate]);
+
     const [activeSection, setActiveSection] = useState('form');
 
     return (
@@ -239,7 +249,7 @@ const List = () => {
             const data = await response.json();
             if (response.ok) {
                 setProducts(data);
-                setFilteredProducts(data); // Initialize filtered products
+                setFilteredProducts(data);
             } else {
                 console.error('Error fetching products:', data.message);
             }

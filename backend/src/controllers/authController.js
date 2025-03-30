@@ -2,7 +2,7 @@ const User = require('../models/user');
 const generateToken = require('../utils/generateToken');
 
 const registerUser = async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password, role } = req.body;
     const alreadyPresent = await User.findOne({ email });
     if(alreadyPresent) {
         res.status(400).send({ message: "User already exists" });
@@ -11,12 +11,14 @@ const registerUser = async (req, res) => {
     const user = await User.create({
         email,
         password,
+        role,
     })
     if(user){
         res.status(200).send({
             msg: "User registered",
             _id: user._id,
             email: user.email,
+            role: user.role,
         })
     }else {
         res.status(400).send({ message: "Invalid user data" });
@@ -32,6 +34,7 @@ const loginUser = async (req, res) => {
             message: "User logged in",
             _id: user._id,
             email: user.email,
+            role: user.role,
             token: generateToken(user._id),
         })
     }else{
