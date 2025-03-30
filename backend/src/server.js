@@ -13,7 +13,7 @@ const app = express();
 
 const cors = require('cors');
 app.use(cors({
-    origin: process.env.CLIENT_URL,
+    origin: "https://product-management-system-frontend-5snj.onrender.com",
     credentials: true,
 }));
 
