@@ -2,6 +2,7 @@ import React from 'react'
 import Navbar from '../ui/Navbar'
 import samba from "../assets/samba.png"
 import style from "../style/Home.module.css"
+import { motion } from 'framer-motion'
 import ProductsList from './ProductsList'
 const Home = () => {
   return (
@@ -34,16 +35,23 @@ const Home = () => {
                 </div>
             </div>
         </div>
-        <img src = {samba} style={{
+        <motion.div 
+        initial={{ opacity: 0, y: -100 }}
+        animate={{ opacity: 1, y: 0 }}
+        style={{
             position:"absolute",
             top:"25%",
             left:"30%",
             zIndex:"1"
-        }}/>
+        }}>
+            <img src = {samba} />
+        </motion.div>
         <div style={{
             marginTop: "4rem"
         }}>
+        <div>
             <ProductsList/>
+        </div>
         </div>
     </div>
   )

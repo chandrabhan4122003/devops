@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHouse, faHandPointRight } from '@fortawesome/free-solid-svg-icons';
 import style from '../style/Admin.module.css';
 
 const Admin = () => {
@@ -29,6 +31,14 @@ const Admin = () => {
                     onClick={() => setActiveSection('list')}
                 >
                     List of Products
+                </div>
+                <div className={style.header}>
+                    <div
+                        className={style.backButton}
+                        onClick={() => navigate('/home')}
+                    >   
+                        <FontAwesomeIcon icon={faHouse} style={{color:"#000"}}/>
+                    </div>
                 </div>
             </div>
 
@@ -88,7 +98,7 @@ const Form = () => {
         formDataToSend.append("rating", formData.rating);
         formDataToSend.append("gender", formData.gender);
         try {
-            const response = await fetch('http://localhost:5000/api/admin/create', {
+            const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/admin/create`, {
                 method: 'POST',
                 headers: {
                     'authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -238,10 +248,9 @@ const List = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [editingProduct, setEditingProduct] = useState(null);
 
-    // Fetch products from the backend
     const fetchProducts = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/admin', {
+            const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/admin`, {
                 headers: {
                     'authorization': `Bearer ${localStorage.getItem('token')}`,
                 },
@@ -258,7 +267,6 @@ const List = () => {
         }
     };
 
-    // Handle search input change
     const handleSearch = (e) => {
         const term = e.target.value.toLowerCase();
         setSearchTerm(term);
@@ -270,10 +278,9 @@ const List = () => {
         setFilteredProducts(filtered);
     };
 
-    // Delete a product
     const deleteProduct = async (id) => {
         try {
-            const response = await fetch(`http://localhost:5000/api/admin/${id}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/admin/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -293,7 +300,7 @@ const List = () => {
     // Update a product
     const updateProduct = async (updatedProduct) => {
         try {
-            const response = await fetch(`http://localhost:5000/api/admin/${updatedProduct._id}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/admin/${updatedProduct._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -325,8 +332,6 @@ const List = () => {
     return (
         <div className={style.listContainer}>
             <h2>List of Products</h2>
-
-            {/* Search Bar */}
             <div className={style.searchBar}>
                 <input
                     type="text"
@@ -371,7 +376,6 @@ const List = () => {
                 </tbody>
             </table>
 
-            {/* Overlay for Editing */}
             {editingProduct && (
                 <div className={style.overlay}>
                     <div className={style.overlayContent}>

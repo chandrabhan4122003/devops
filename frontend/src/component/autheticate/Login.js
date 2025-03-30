@@ -15,7 +15,7 @@ const Login = () => {
 
     const loginUser = async (email, password) => {
         try {
-            const response = await fetch('http://localhost:5000/api/auth/login', {
+            const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/auth/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -24,10 +24,10 @@ const Login = () => {
             });
             const data = await response.json();
             if (response.ok) {
-                localStorage.setItem('token', data.token); // Save the token
-                localStorage.setItem('role', data.role); // Save the role
+                localStorage.setItem('token', data.token); 
+                localStorage.setItem('role', data.role); 
                 console.log('Login successful:', data);
-                navigate('/home'); // Redirect to the home page
+                navigate('/home'); 
             } else {
                 console.error('Login failed:', data.message);
             }

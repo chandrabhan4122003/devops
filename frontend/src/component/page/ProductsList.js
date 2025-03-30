@@ -13,7 +13,7 @@ const ProductsList = () => {
         try {
             let query = `?maxPrice=${maxPrice}`;
             query += `&gender=${selectedTab !== "All" ? selectedTab : ""}`;
-            const response = await fetch(`http://localhost:5000/api/admin/search${query}`);
+            const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/admin/search${query}`);
             const data = await response.json();
             if (response.ok) {
                 setProducts(data);
@@ -38,7 +38,6 @@ const ProductsList = () => {
     }, [useFilter, maxPrice, selectedTab]);
     return (
         <div className={style.container}>
-            {/* Sidebar for Filters */}
             <div className={style.sidebar}>
                 <h3>Filter by Price</h3>
                 <div className={style.toggleFilter}>
@@ -90,7 +89,7 @@ const ProductsList = () => {
             <div className={style.productsGrid}>
                 {products.map((product) => (
                     <div key={product._id} className={style.productCard}>
-                        <img src={`http://localhost:5000${product.image}`} alt={product.name} className={style.productImage} />
+                        <img src={`${process.env.REACT_APP_API_BASE_URL}${product.image}`} alt={product.name} className={style.productImage} />
                         <div className={style.productDetails}>
                             <h4>{product.name}</h4>
                             <p>{product.category}</p>
