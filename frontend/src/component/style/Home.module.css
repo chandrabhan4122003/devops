@@ -1,0 +1,47 @@
+.hero{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    position: relative;
+}
+.left{
+    font-family: "Boldonse", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 2rem;
+    color: #333;
+    margin: 20px 0;
+}
+.right{
+    color: #fff;
+    border-radius: 50%;
+    background-color: #333;
+    height: 50vh;
+    width: 50vh;
+    position: relative;
+}
+.text{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    position: absolute;
+    top: 20%;
+    left: 33%;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #fff;
+    text-align: center;
+}
+.btn{
+    background-color: #fff;
+    color: #333;
+    padding: 10px 20px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    margin-top: 10px;
+    box-shadow: 0 0 2px rgba(255, 255, 255, 0.7);
+}

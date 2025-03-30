@@ -1,0 +1,100 @@
+.container {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Sidebar for Filters */
+.sidebar {
+    flex: 1;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+h3 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.slider {
+    width: 100%;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.priceLabel {
+    margin-top: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+/* Products Grid */
+.productsGrid {
+    flex: 3;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.productCard {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.productCard:hover {
+    transform: translateY(-5px);
+}
+
+.productImage {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.productDetails h4 {
+    margin: 10px 0 5px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.productDetails p {
+    margin: 5px 0;
+    font-size: 1rem;
+    color: #555;
+}
+
+.navTabs {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.tab {
+    position: relative;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 5px 0;
+}
+
+.underline {
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    height: 2px;
+    background-color: currentColor;
+    border-radius: 2px;
+}
