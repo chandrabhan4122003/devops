@@ -1,5 +1,5 @@
-## Zynetic - Product Management System
-Zynetic is a full-stack product management system that allows users to manage products, 
+## Product Management System
+A full-stack product management system that allows users to manage products, 
 filter them by price and gender, and perform admin-specific tasks like adding and listing products. 
 The application is built using React for the frontend and Node.js with Express for the backend.
 
