@@ -4,15 +4,16 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse, faHandPointRight } from '@fortawesome/free-solid-svg-icons';
 import style from '../style/Admin.module.css';
+import { API_BASE_URL, apiRequest } from '../../config/api'
 
 const Admin = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-      const role = localStorage.getItem('role');
-      if (role !== 'admin') {
-        navigate('/'); 
-      }
+        const role = localStorage.getItem('role');
+        if (role !== 'admin') {
+            navigate('/');
+        }
     }, [navigate]);
 
     const [activeSection, setActiveSection] = useState('form');
@@ -36,8 +37,8 @@ const Admin = () => {
                     <div
                         className={style.backButton}
                         onClick={() => navigate('/home')}
-                    >   
-                        <FontAwesomeIcon icon={faHouse} style={{color:"#000"}}/>
+                    >
+                        <FontAwesomeIcon icon={faHouse} style={{ color: "#000" }} />
                     </div>
                 </div>
             </div>
@@ -51,6 +52,7 @@ const Admin = () => {
 };
 
 const Form = () => {
+    const navigate = useNavigate(); // Add this line at the top of Form component
     const [formData, setFormData] = useState({
         name: '',
         description: '',
@@ -88,6 +90,7 @@ const Form = () => {
         });
     };
 
+    // Fix the createProduct function
     const createProduct = async () => {
         const formDataToSend = new FormData();
         formDataToSend.append("name", formData.name);
@@ -97,18 +100,20 @@ const Form = () => {
         formDataToSend.append("image", formData.image);
         formDataToSend.append("rating", formData.rating);
         formDataToSend.append("gender", formData.gender);
+
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/admin/create`, {
+            const response = await apiRequest('/api/admin/create', {
                 method: 'POST',
-                headers: {
-                    'authorization': `Bearer ${localStorage.getItem('token')}`,
-                },
                 body: formDataToSend,
             });
-            if (response.ok) alert('Product created successfully');
-            else console.log('Error creating product');
-        } catch (err) {
-            console.log('Error: ', err);
+
+            alert('Product created successfully');
+
+        } catch (error) {
+            alert(error.message);
+            if (error.message.includes('authentication')) {
+                navigate('/login');
+            }
         }
     };
 
@@ -250,7 +255,7 @@ const List = () => {
 
     const fetchProducts = async () => {
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/admin`, {
+            const response = await fetch(`${API_BASE_URL}/api/admin`, {
                 headers: {
                     'authorization': `Bearer ${localStorage.getItem('token')}`,
                 },
@@ -280,7 +285,7 @@ const List = () => {
 
     const deleteProduct = async (id) => {
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/admin/${id}`, {
+            const response = await fetch(`${API_BASE_URL}/api/admin/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -300,7 +305,7 @@ const List = () => {
     // Update a product
     const updateProduct = async (updatedProduct) => {
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/admin/${updatedProduct._id}`, {
+            const response = await fetch(`${API_BASE_URL}/api/admin/${updatedProduct._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
