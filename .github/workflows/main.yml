@@ -23,14 +23,18 @@ jobs:
           password: ${{ secrets.DOCKER_TOKEN }}
 
       - name: Build and push backend image
-        run: |
-          docker build -t chandrabhan4122003/pms-backend:latest ./backend
-          docker push chandrabhan4122003/pms-backend:latest
+        uses: docker/build-push-action@v4
+        with:
+          context: ./backend
+          push: true
+          tags: chandrabhan4122003/pms-backend:latest
 
       - name: Build and push frontend image
-        run: |
-          docker build -t chandrabhan4122003/pms-frontend ./frontend
-          docker push chandrabhan4122003/pms-frontend
+        uses: docker/build-push-action@v4
+        with:
+          context: ./frontend
+          push: true
+          tags: chandrabhan4122003/pms-frontend:latest
 
       - name: Set up Docker Compose
         run: |
