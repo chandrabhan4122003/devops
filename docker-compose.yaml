@@ -2,7 +2,10 @@
 services:
   backend:
     build: ./backend
+    # only image is added after compose confirm working 
+    # image: chandrabhan4122003/pms-backend:latest   
     image: chandrabhan4122003/pms-backend:latest
+
     ports:
       - "5000:5000"
     networks:
