@@ -24,8 +24,8 @@ jobs:
 
       - name: Build and push backend image
         run: |
-          docker build -t chandrabhan4122003/pms-backend ./backend
-          docker push chandrabhan4122003/pms-backend
+          docker build -t chandrabhan4122003/pms-backend:latest ./backend
+          docker push chandrabhan4122003/pms-backend:latest
 
       - name: Build and push frontend image
         run: |
