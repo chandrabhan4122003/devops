@@ -24,10 +24,10 @@ const Login = () => {
             });
             const data = await response.json();
             if (response.ok) {
-                localStorage.setItem('token', data.token); 
-                localStorage.setItem('role', data.role); 
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('role', data.role);
                 console.log('Login successful:', data);
-                navigate('/home'); 
+                navigate('/home');
             } else {
                 console.error('Login failed:', data.message);
             }

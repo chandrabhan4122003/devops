@@ -52,7 +52,6 @@ const Admin = () => {
 };
 
 const Form = () => {
-    const navigate = useNavigate(); // Add this line at the top of Form component
     const [formData, setFormData] = useState({
         name: '',
         description: '',
@@ -90,7 +89,6 @@ const Form = () => {
         });
     };
 
-    // Fix the createProduct function
     const createProduct = async () => {
         const formDataToSend = new FormData();
         formDataToSend.append("name", formData.name);
@@ -100,20 +98,18 @@ const Form = () => {
         formDataToSend.append("image", formData.image);
         formDataToSend.append("rating", formData.rating);
         formDataToSend.append("gender", formData.gender);
-
         try {
-            const response = await apiRequest('/api/admin/create', {
+            const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/admin/create`, {
                 method: 'POST',
+                headers: {
+                    'authorization': `Bearer ${localStorage.getItem('token')}`,
+                },
                 body: formDataToSend,
             });
-
-            alert('Product created successfully');
-
-        } catch (error) {
-            alert(error.message);
-            if (error.message.includes('authentication')) {
-                navigate('/login');
-            }
+            if (response.ok) alert('Product created successfully');
+            else console.log('Error creating product');
+        } catch (err) {
+            console.log('Error: ', err);
         }
     };
 
@@ -255,7 +251,7 @@ const List = () => {
 
     const fetchProducts = async () => {
         try {
-            const response = await fetch(`${API_BASE_URL}/api/admin`, {
+            const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/admin`, {
                 headers: {
                     'authorization': `Bearer ${localStorage.getItem('token')}`,
                 },
@@ -285,7 +281,7 @@ const List = () => {
 
     const deleteProduct = async (id) => {
         try {
-            const response = await fetch(`${API_BASE_URL}/api/admin/${id}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/admin/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -305,7 +301,7 @@ const List = () => {
     // Update a product
     const updateProduct = async (updatedProduct) => {
         try {
-            const response = await fetch(`${API_BASE_URL}/api/admin/${updatedProduct._id}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/admin/${updatedProduct._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
