@@ -128,10 +128,11 @@ pipeline {
         }
     }
 
-    post {
-        always {
-         node {
+post {
+    always {
+        node {
             sh 'docker logout'
         }
     }
 }
+
